@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora Cripto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    .form-row > div {
+      flex: 1;
+    }
+    .risk-level {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .risk-option {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .risk-option.selected {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .success-message {
+      display: none;
+      margin-top: 20px;
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Calculadora Cripto</h1>
+  <p>Calcule seu potencial de investimento</p>
+
+  <!-- Correções aplicadas -->
+  <form id="crypto-form" action="/enviar" method="POST">
+    <label for="nome">Nome Completo</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <div class="form-row">
+      <div>
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div>
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" name="idade" min="18" max="100" required>
+      </div>
+      <div>
+        <label for="experiencia">Experiência</label>
+        <select id="experiencia" name="experiencia" required>
+          <option value="">Selecione</option>
+          <option value="iniciante">Iniciante</option>
+          <option value="intermediario">Intermediário</option>
+          <option value="avancado">Avançado</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="criptomoeda">Criptomoeda</label>
+    <select id="criptomoeda" name="criptomoeda" required>
+      <option value="">Escolha</option>
+      <option value="bitcoin">Bitcoin</option>
+      <option value="ethereum">Ethereum</option>
+      <option value="cardano">Cardano</option>
+      <option value="polkadot">Polkadot</option>
+      <option value="solana">Solana</option>
+    </select>
+
+    <label for="valor_investimento">Valor do Investimento (R$)</label>
+    <input type="number" id="valor_investimento" name="valor_investimento" min="100" step="50" required>
+
+    <label for="prazo_investimento">Prazo do Investimento</label>
+    <select id="prazo_investimento" name="prazo_investimento" required>
+      <option value="">Escolha</option>
+      <option value="curto">Curto (3-6 meses)</option>
+      <option value="medio">Médio (6-12 meses)</option>
+      <option value="longo">Longo (1-2 anos)</option>
+      <option value="muito_longo">Muito longo (2+ anos)</option>
+    </select>
+
+    <label>Perfil de Risco</label>
+    <div class="risk-level">
+      <div class="risk-option" data-risk="conservador">Conservador</div>
+      <div class="risk-option" data-risk="moderado">Moderado</div>
+      <div class="risk-option" data-risk="agressivo">Agressivo</div>
+    </div>
+    <input type="hidden" id="perfil_risco" name="perfil_risco" required>
+
+    <!-- Campo hidden corrigido -->
+    <input type="hidden" id="observacoes" name="observacoes" value="">
+
+    <label for="observacoes">Observações</label>
+    <textarea id="observacoes" name="observacoes" rows="3"></textarea>
+
+    <button type="submit">Calcular</button>
+  </form>
+
+  <div id="success-message" class="success-message">
+    Análise enviada com sucesso!
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.risk-option').forEach(option => {
+    option.addEventListener('click', () => {
+      document.querySelectorAll('.risk-option').forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+      document.getElementById('perfil_risco').value = option.dataset.risk;
+    });
+  });
+</script>
+
+</body>
+</html>
